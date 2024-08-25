@@ -7,3 +7,7 @@ A
 src/Interest.java,a\1\a1e9e342e69fe0a0069b0f0fd007b7199faa700b
 E
 src/package-info.java,d\3\d3d2630fa83f97511dbec7555b2d4c6604052ea2
+F
+src/FloatInputGui.java,8\b\8b6064faf4f722f4d281236c290a307b26395bd2
+A
+src/MakeWork.java,8\d\8de83da0b2ef8ff56f4ae21c5f735cfb370742c5
