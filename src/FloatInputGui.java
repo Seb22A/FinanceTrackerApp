@@ -7,7 +7,7 @@ public class FloatInputGui extends JFrame {
 
     private JTextField textField1, textField2, textField3, textField4;
     private JLabel resultLabel;
-    private Interest interest = new Interest();
+    public static Interest interest = new Interest();
 
 
 
@@ -60,11 +60,9 @@ public class FloatInputGui extends JFrame {
             interest.setDeposited(Float.parseFloat(textField2.getText()));
             interest.setYears(Integer.parseInt(textField3.getText()));
             interest.setMonths(Integer.parseInt(textField4.getText()));
-            double result = new MakeWork().CalculatedInterest();
-            System.out.println(result);
 
 
-           resultLabel.setText(Double.toString(result));
+           resultLabel.setText(new MakeWork().CalculatedInterest());
         } catch (NumberFormatException ex) {
             resultLabel.setText("Please enter valid floats.");
         }
