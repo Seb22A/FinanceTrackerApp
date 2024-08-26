@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class FloatInputGui extends JFrame {
 
-    private JTextField textField1, textField2, textField3, textField4, totalInterestField, totalDepositedField;
+    private JTextField textField1, textField2, textField3, textField4, monthlyDepositField, totalInterestField, totalDepositedField;
     private JLabel resultLabel;
     public static Interest interest = new Interest();
 
@@ -14,9 +16,9 @@ public class FloatInputGui extends JFrame {
 
     public FloatInputGui() {
         setTitle("Float Input GUI");
-        setSize(400, 300);
+        setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(9, 2));
+        setLayout(new GridLayout(10, 2));
 
         // Create and add labels and text fields to the frame
         add(new JLabel("Interest Rate:"));
@@ -34,6 +36,10 @@ public class FloatInputGui extends JFrame {
         add(new JLabel("Months:"));
         textField4 = new JTextField();
         add(textField4);
+
+        add(new JLabel("Monthly Deposit:"));
+        monthlyDepositField = new JTextField();
+        add(monthlyDepositField);
 
         // Radio buttons for interest type
         yearlyButton = new JRadioButton("Yearly");
@@ -80,6 +86,21 @@ public class FloatInputGui extends JFrame {
             }
         });
 
+        // Add a focus listener to the monthly deposit field to auto-select monthly interest
+        monthlyDepositField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    float monthlyDeposit = Float.parseFloat(monthlyDepositField.getText());
+                    if (monthlyDeposit > 0) {
+                        monthlyButton.setSelected(true);
+                    }
+                } catch (NumberFormatException ex) {
+                    // Ignore invalid input, as it will be handled in getFloats
+                }
+            }
+        });
+
         setVisible(true);
     }
 
@@ -90,6 +111,19 @@ public class FloatInputGui extends JFrame {
             interest.setDeposited(Float.parseFloat(textField2.getText()));
             interest.setYears(Integer.parseInt(textField3.getText()));
             interest.setMonths(Integer.parseInt(textField4.getText()));
+
+            // If the monthly deposit field is not empty, include it in the calculation
+            if (!monthlyDepositField.getText().isEmpty()) {
+                float monthlyDeposit = Float.parseFloat(monthlyDepositField.getText());
+                interest.setMonthlyDeposit(monthlyDeposit);
+
+                // Auto-select the monthly interest type if a positive value is provided
+                if (monthlyDeposit > 0) {
+                    monthlyButton.setSelected(true);
+                }
+            } else {
+                interest.setMonthlyDeposit(0);  // If empty, set monthly deposit to 0
+            }
 
             String interestType = "";
             if (yearlyButton.isSelected()) {
@@ -109,9 +143,7 @@ public class FloatInputGui extends JFrame {
             totalDepositedField.setText(String.valueOf(interest.getTotalDeposited()));
 
         } catch (NumberFormatException ex) {
-            resultLabel.setText("Please enter valid floats.");
+            resultLabel.setText("Please enter valid numbers.");
         }
     }
-
-
 }

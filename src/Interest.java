@@ -4,7 +4,7 @@ public class Interest {
     private int months;
     private int years;
     private float deposited;
-    private float monthlyDeposite;
+    private float monthlyDeposit;
     private double totalAccruedInterest;
     private double totalDeposited;
 
@@ -13,8 +13,8 @@ public class Interest {
         this.deposited = deposited;
     }
 
-    public void setMonthlyDeposite(float monthlyDeposite) {
-        this.monthlyDeposite = monthlyDeposite;
+    public void setMonthlyDeposit(float monthlyDeposite) {
+        this.monthlyDeposit = monthlyDeposite;
     }
 
     public void setInterestRate(float interestRate) {
@@ -53,8 +53,8 @@ public class Interest {
         return years;
     }
 
-    public float getMonthlyDeposite() {
-        return monthlyDeposite;
+    public float getMonthlyDeposit() {
+        return monthlyDeposit;
     }
 
     public double getTotalAccruedInterest() {

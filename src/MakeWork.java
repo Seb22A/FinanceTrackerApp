@@ -5,7 +5,6 @@ public class MakeWork {
     public double result;
     public double putIn;
     public double accrued;
-    public double monthlyDeposite = interest.getMonthlyDeposite();
     public UserFinance userFinance = new UserFinance();
 
 
@@ -16,6 +15,8 @@ public class MakeWork {
         int years = interest.getYears();
         float months = (float) interest.getMonths() / 12;
         float time = years + months;
+        float monthlyDeposit = interest.getMonthlyDeposit();
+
         DecimalFormat twoPlace = new DecimalFormat("#.##");
 
         switch (interestType){
@@ -30,8 +31,13 @@ public class MakeWork {
         }
 
         System.out.println(CalcForMonthlyDeposit(interestRate,deposited,time,500));
+        boolean monthlyDeposites = false;
+        if (monthlyDeposit > 0){
+            monthlyDeposites = true;
+            result = CalcForMonthlyDeposit(interestRate, deposited, time, monthlyDeposit);
+        }
 
-        interestAmount(result, deposited, false);
+        interestAmount(result, deposited, monthlyDeposites);
         System.out.println("Put in: "  + putIn);
         System.out.println("Accrued: " + accrued);
 
@@ -63,6 +69,6 @@ public class MakeWork {
     }
     private double CalcForMonthlyDeposit(float interestRate, float deposit, float time, float monthlyDeposit){
 
-        return CalculateMonthly(interestRate,deposit,time) + (CalculateMonthly(interestRate,monthlyDeposit,time) - 1)/(interestRate/12);
+        return CalculateMonthly(interestRate,deposit,time) + ( monthlyDeposit * (CalculateMonthly(interestRate,1,time) - 1))/(interestRate/12);
     }
 }
