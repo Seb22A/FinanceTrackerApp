@@ -4,14 +4,29 @@ public class Interest {
     private int months;
     private int years;
     private float deposited;
+    private float monthlyDeposite;
+    private double totalAccruedInterest;
+    private double totalDeposited;
 
 
     public void setDeposited(float deposited) {
         this.deposited = deposited;
     }
 
+    public void setMonthlyDeposite(float monthlyDeposite) {
+        this.monthlyDeposite = monthlyDeposite;
+    }
+
     public void setInterestRate(float interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public void setTotalAccruedInterest(double totalAccruedInterest) {
+        this.totalAccruedInterest = totalAccruedInterest;
+    }
+
+    public void setTotalDeposited(double totalDeposited) {
+        this.totalDeposited = totalDeposited;
     }
 
     public void setMonths(int months) {
@@ -36,6 +51,18 @@ public class Interest {
 
     public int getYears() {
         return years;
+    }
+
+    public float getMonthlyDeposite() {
+        return monthlyDeposite;
+    }
+
+    public double getTotalAccruedInterest() {
+        return totalAccruedInterest;
+    }
+
+    public double getTotalDeposited() {
+        return totalDeposited;
     }
 }
 

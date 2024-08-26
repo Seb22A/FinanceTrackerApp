@@ -2,10 +2,15 @@ import java.text.DecimalFormat;
 
 public class MakeWork {
     Interest interest = FloatInputGui.interest;
+    public double result;
+    public double putIn;
+    public double accrued;
+    public double monthlyDeposite = interest.getMonthlyDeposite();
     public UserFinance userFinance = new UserFinance();
 
 
-    public String CalculatedInterest(){
+    public String CalculateInterest(String interestType){
+
         float interestRate = interest.getInterestRate() / 100;
         float deposited = interest.getDeposited();
         int years = interest.getYears();
@@ -13,12 +18,38 @@ public class MakeWork {
         float time = years + months;
         DecimalFormat twoPlace = new DecimalFormat("#.##");
 
-        double result = CalculateYearly(interestRate,deposited,time);
-        System.out.println(CalculateMonthly(interestRate,deposited,time));
-        System.out.println(CalculateDaily(interestRate,deposited,time));
+        switch (interestType){
+            case "Yearly":
+                result = CalculateYearly(interestRate,deposited,time);
+                break;
+            case "Monthly":
+                result = CalculateMonthly(interestRate,deposited,time);
+                break;
+            case "Daily":
+                result = CalculateDaily(interestRate,deposited,time);
+        }
+
         System.out.println(CalcForMonthlyDeposit(interestRate,deposited,time,500));
 
+        interestAmount(result, deposited, false);
+        System.out.println("Put in: "  + putIn);
+        System.out.println("Accrued: " + accrued);
+
         return twoPlace.format(result);
+    }
+
+    public void interestAmount(double result, float deposited, boolean monthlyDeposites){
+        if(!monthlyDeposites) {
+            accrued = result - deposited;
+            putIn = deposited;
+        }
+        else {
+           float time = interest.getMonths() + (interest.getYears() * 12);
+           putIn = deposited * time;
+           accrued = result - putIn;
+        }
+        interest.setTotalAccruedInterest(accrued);
+        interest.setTotalDeposited(putIn);
     }
 
     private double CalculateYearly(float interestRate, float deposit, float time){
