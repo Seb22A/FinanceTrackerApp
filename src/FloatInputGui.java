@@ -8,6 +8,7 @@ import java.awt.event.FocusEvent;
 public class FloatInputGui extends JFrame {
 
     private JTextField textField1, textField2, textField3, textField4, monthlyDepositField, totalInterestField, totalDepositedField;
+    private JTextField bankAmountField, incomeField, spentField;
     private JLabel resultLabel;
     public static Interest interest = new Interest();
 
@@ -15,12 +16,31 @@ public class FloatInputGui extends JFrame {
     private JRadioButton yearlyButton, monthlyButton, dailyButton;
 
     public FloatInputGui() {
-        setTitle("Float Input GUI");
-        setSize(400, 350);
+        setTitle("User Finance and Interest Calculation");
+        setSize(400, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(10, 2));
+        setLayout(new GridLayout(14, 2)); // Adjusted for additional fields
 
-        // Create and add labels and text fields to the frame
+        // User Finance Section
+        add(new JLabel("User Finance", SwingConstants.CENTER));
+        add(new JLabel()); // Placeholder for grid alignment
+
+        add(new JLabel("Current Bank Amount:"));
+        bankAmountField = new JTextField();
+        add(bankAmountField);
+
+        add(new JLabel("Income:"));
+        incomeField = new JTextField();
+        add(incomeField);
+
+        add(new JLabel("Spent This Month:"));
+        spentField = new JTextField();
+        add(spentField);
+
+        // Interest Calculation Section
+        add(new JLabel("Interest Calculation", SwingConstants.CENTER));
+        add(new JLabel()); // Placeholder for grid alignment
+
         add(new JLabel("Interest Rate:"));
         textField1 = new JTextField();
         add(textField1);
@@ -86,7 +106,6 @@ public class FloatInputGui extends JFrame {
             }
         });
 
-        // Add a focus listener to the monthly deposit field to auto-select monthly interest
         monthlyDepositField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -134,16 +153,18 @@ public class FloatInputGui extends JFrame {
                 interestType = "Daily";
             }
 
-            // Assuming CalculateInterest() now accepts interest type and returns a formatted string
             String result = new MakeWork().CalculateInterest(interestType);
             resultLabel.setText(result);
 
-            // Assuming CalculateInterest() also updates the interest object with total values
             totalInterestField.setText(String.valueOf(interest.getTotalAccruedInterest()));
             totalDepositedField.setText(String.valueOf(interest.getTotalDeposited()));
 
         } catch (NumberFormatException ex) {
             resultLabel.setText("Please enter valid numbers.");
         }
+    }
+
+    public static void main(String[] args) {
+        new FloatInputGui();
     }
 }
